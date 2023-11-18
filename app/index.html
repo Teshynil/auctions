@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subasta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    * {
+      font-family: monospace;
+    }
+
+    html {
+      font-size: 1vw;
+    }
+
+    body {
+
+      background: radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 9%, hsla(0, 100%, 20%, 0) 9%) 0 0, radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 8%, hsla(0, 100%, 20%, 0) 10%) 50px 50px, radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 50px 0, radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 0 50px, radial-gradient(hsla(0, 100%, 20%, 1) 35%, hsla(0, 100%, 20%, 0) 60%) 50px 0, radial-gradient(hsla(0, 100%, 20%, 1) 35%, hsla(0, 100%, 20%, 0) 60%) 100px 50px, radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 0 0, radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 50px 50px, linear-gradient(45deg, hsla(0, 100%, 20%, 0) 49%, hsla(0, 100%, 0%, 1) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0, linear-gradient(-45deg, hsla(0, 100%, 20%, 0) 49%, hsla(0, 100%, 0%, 1) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0;
+      background-color: #300;
+      background-size: 100px 100px;
+      backdrop-filter: brightness(1.1) grayscale(1);
+    }
+
+    .auction-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: space-between;
+    }
+
+    .top-section {
+      text-align: left;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .center-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50%;
+      flex-direction: column;
+      filter: drop-shadow(0px 6px 12px black);
+    }
+
+    .controls-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bid-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 3rem;
+      line-height: normal;
+    }
+
+    .bid-section span {
+      font-size: 4rem;
+      text-shadow: 1px 5px 4px black;
+      color: white;
+    }
+
+    #username {
+      font-size: 3rem;
+      line-height: normal;
+      text-shadow: 1px 5px 4px black;
+      color: white;
+      cursor: pointer;
+    }
+
+    .auction-container .btn {
+      background-color: #333;
+      color: white;
+      border-radius: 0.3rem;
+      font-size: inherit;
+      margin-top: 1rem;
+    }
+
+    #startAuctionBtn {
+      font-size: 1rem;
+    }
+
+    .bottom-section {
+      text-align: left;
+      padding: 10px;
+      display: flex;
+      color: white;
+      flex-direction: column;
+      align-items: center;
+      text-shadow: 1px 5px 4px black;
+    }
+
+    #participants {
+      flex-direction: row;
+      color: white;
+      display: inline-flex;
+      justify-content: space-around;
+      padding: 0;
+      width: 100%;
+    }
+
+    .bottom-section::before {
+      content: "Participantes";
+    }
+
+    #participants li {
+      display: inline-block;
+    }
+
+
+    /* Add this to your existing CSS or adjust based on your styling */
+    .flip-clock {
+      display: flex;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .flip-clock span {
+      font-size: 3rem;
+      text-shadow: 1px 5px 4px black;
+      color: white;
+    }
+
+    .flip-clock-wrapper {
+      display: inline-block;
+      margin: 10px;
+      transition: --price 1s;
+      transition-timing-function: linear;
+      --temp: calc(var(--price));
+      --v1: max(var(--temp) - 0.5, 0);
+      --v2: max((var(--temp) - var(--v1)) * 100 - 0.5, 0);
+      counter-reset: v1 var(--v1) v2 var(--v2);
+      line-height: normal;
+      background-image: linear-gradient(90deg, #333 0rem, #333 0.95rem, transparent 0.75rem, transparent 0.85rem);
+    }
+
+    .flip-clock-upper,
+    .flip-clock-lower {
+      display: flex;
+    }
+
+    .flip-clock-lower,
+    .flip-clock-lower-text {
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: #333;
+      color: #fff;
+      border-radius: 0.2rem;
+      overflow: hidden;
+      width: 0.9rem;
+      font-size: 9rem;
+      margin: auto 1px;
+    }
+
+    .flip-clock-wrapper::after {
+      content: counter(v1, decimal-leading-zero) "." counter(v2, decimal-leading-zero) "$";
+      font-family: monospace;
+      background-color: transparent;
+      color: #fff;
+      padding-left: 0.1em;
+      background-position-x: -0.19em;
+      font-size: 9em;
+      background-clip: content-box;
+      letter-spacing: 0.3em;
+      background-image: repeating-linear-gradient(270deg, #333 0em, #333 0.75em, transparent 0.75em, transparent 0.85em, #333 0.85em, #333 1.6em, transparent 1.6em, transparent 1.7em, #333 1.7em, #333 2.45em, transparent 2.45em, transparent 2.55em, #333 2.55em, #333 3.3em, transparent 3.3em, transparent 3.4em, #333 3.4em, #333 4.15em, transparent 4.15em, transparent 4.25em, #333 4.25em, #333 5em, transparent 5em, transparent 5.1em, #333 5.1em, #333 5.85em, transparent 5.85em, transparent 5.95em, #333 5.95em, #333 6.7em, transparent 6.7em, transparent 6.8em);
+    }
+
+    @property --price {
+      syntax: "<number>";
+      initial-value: 0;
+      inherits: false;
+    }
+
+    @property --temp {
+      syntax: "<number>";
+      initial-value: 0;
+      inherits: false;
+    }
+
+    @property --v1 {
+      syntax: "<integer>";
+      initial-value: 0;
+      inherits: false;
+    }
+
+    @property --v2 {
+      syntax: "<integer>";
+      initial-value: 0;
+      inherits: false;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="auction-container">
+    <div class="top-section">
+      <div class="row">
+        <span id="username">Pruebas</span>
+      </div>
+      <div class="row">
+        <button id="exitAuctionBtn" class="btn btn-danger">Salir de la subasta</button>
+      </div>
+    </div>
+    <div class="center-section">
+      <div class="controls-section" hidden>
+        <button id="startAuctionBtn" class="btn">Iniciar la subasta</button>
+      </div>
+      <div class="flip-clock" id="basePriceFlipClock">
+        <span id="item">Paquete magico 1</span>
+        <div class="flip-clock-wrapper" id="price-clock" style="--price:0">
+        </div>
+      </div>
+      <div class="bid-section" hidden>
+        <span id="sellTo" hidden>Vendido a: Prueba</span>
+        <span id="sellBy" hidden>Por a: $300.0</span>
+        <button id="endAuctionBtn" class="btn">Comprar</button>
+      </div>
+    </div>
+    <div class="bottom-section">
+      <ul id="participants"></ul>
+    </div>
+  </div>
+
+  <div class="modal" id="auctionModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Enter Auction Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control" id="auctionName" placeholder="Nombre de la subasta">
+          <input type="number" class="form-control mt-3" id="auctionDuration" placeholder="Duracion en Segundos">
+          <input type="number" class="form-control mt-3" id="auctionBasePrice" placeholder="Precio Base">
+          <input type="number" class="form-control mt-3" id="auctionMinimalPrice" placeholder="Precio Minimo">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="submitDetails">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
