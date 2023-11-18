@@ -160,6 +160,28 @@ const decodeDetails = function (encodedDetails) {
         socket.emit('register', { name: username, auctionId: urlParams.get('id') });
     });
 
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const element = document.getElementById('shareBtn');
+        if (!navigator.clipboard) {
+            const storage = document.createElement('textarea');
+            storage.value = window.location.href;
+            element.appendChild(storage);
+            storage.select();
+            storage.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            element.removeChild(storage);
+        } else {
+            navigator.clipboard.writeText(window.location.href).then(
+                function () {
+                    alert("Comparte la liga que esta en tu portapapeles!"); // success 
+                })
+                .catch(
+                    function () {
+                        alert("Hubo un error, por favor da el permiso para copiar"); // error
+                    });
+        }
+    });
+
     document.getElementById('exitAuctionBtn').addEventListener('click', () => {
         socket.emit('exitAuction');
         window.location.href = `${window.location.origin}${window.location.pathname}`;
