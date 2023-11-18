@@ -20,7 +20,7 @@ const decodeDetails = function (encodedDetails) {
         return username;
     }
 
-    const socket = io('ws://localhost:8585');
+    const socket = io('ws://wbauctions.centraldungeon.org:8585');
 
     window.username = ''; // Store the registered username
     window.intervalId = null;
