@@ -90,12 +90,12 @@ const decodeDetails = function (encodedDetails) {
             document.querySelector('.controls-section').hidden = false;
         }
         updateFlipClock();
-        document.getElementById('auction').hidden = false;
+        document.getElementById('auction').style.opacity = 1;
     });
 
     socket.on('auctionAlreadyStarted', () => {
         document.getElementById('username').innerText = `${window.username}`;
-        document.getElementById('auction').hidden = false;
+        document.getElementById('auction').style.opacity = 1;
     });
 
     socket.on('retryRegister', () => {
