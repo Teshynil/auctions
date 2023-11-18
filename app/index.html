@@ -177,6 +177,12 @@
       background-image: repeating-linear-gradient(270deg, #333 0em, #333 0.75em, transparent 0.75em, transparent 0.85em, #333 0.85em, #333 1.6em, transparent 1.6em, transparent 1.7em, #333 1.7em, #333 2.45em, transparent 2.45em, transparent 2.55em, #333 2.55em, #333 3.3em, transparent 3.3em, transparent 3.4em, #333 3.4em, #333 4.15em, transparent 4.15em, transparent 4.25em, #333 4.25em, #333 5em, transparent 5em, transparent 5.1em, #333 5.1em, #333 5.85em, transparent 5.85em, transparent 5.95em, #333 5.95em, #333 6.7em, transparent 6.7em, transparent 6.8em);
     }
 
+    @media (min-width: 576px) {
+      .modal-dialog {
+        max-width: 30rem;
+      }
+    }
+
     @property --price {
       syntax: "<number>";
       initial-value: 0;
@@ -240,7 +246,7 @@
   </div>
 
   <div class="modal" id="auctionModal">
-    <div class="modal-dialog" style="max-width: 30rem;">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Ingresa los detalles de la subasta</h5>
