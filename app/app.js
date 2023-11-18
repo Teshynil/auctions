@@ -66,7 +66,6 @@ const decodeDetails = function (encodedDetails) {
     socket.on('reconnectSuccess', () => {
         // Handle successful reconnection (update UI or perform other actions)
         console.log('Successfully reconnected!');
-        document.getElementById('auction').hidden = false;
     });
 
     socket.on('newCookie', (newCookie) => {
@@ -91,11 +90,12 @@ const decodeDetails = function (encodedDetails) {
             document.querySelector('.controls-section').hidden = false;
         }
         updateFlipClock();
-
+        document.getElementById('auction').hidden = false;
     });
 
     socket.on('auctionAlreadyStarted', () => {
         document.getElementById('username').innerText = `${window.username}`;
+        document.getElementById('auction').hidden = false;
     });
 
     socket.on('retryRegister', () => {
