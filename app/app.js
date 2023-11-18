@@ -38,7 +38,7 @@ const decodeDetails = function (encodedDetails) {
 
     socket.on('connect', () => {
         const storedCookie = getStoredCookie(); // Retrieve the stored cookie from local storage or other means
-        
+
         if (!urlParams.has('id')) {
             socket.emit('checkAuth', storedCookie, urlParams.get('id'));
             const auctionModal = new bootstrap.Modal(document.getElementById('auctionModal'));
@@ -58,8 +58,7 @@ const decodeDetails = function (encodedDetails) {
                 const encodedDetails = encodeDetails(auctionName, auctionDuration, auctionMinimalPrice, auctionBasePrice);
                 window.location.href = `${window.location.origin}${window.location.pathname}?id=${encodedDetails}`;
             };
-        }else{
-            
+        } else {
             socket.emit('auth', storedCookie, urlParams.get('id'));
         }
     });
@@ -67,7 +66,7 @@ const decodeDetails = function (encodedDetails) {
     socket.on('reconnectSuccess', () => {
         // Handle successful reconnection (update UI or perform other actions)
         console.log('Successfully reconnected!');
-
+        document.getElementById('auction').hidden = false;
     });
 
     socket.on('newCookie', (newCookie) => {
