@@ -13,7 +13,8 @@
     }
 
     html {
-      font-size: 1vw;
+      --fontSize: calc((1vw + 1vh));
+      font-size: var(--fontSize);
     }
 
     body {
@@ -239,7 +240,7 @@
   </div>
 
   <div class="modal" id="auctionModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 30rem;">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Ingresa los detalles de la subasta</h5>
