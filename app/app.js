@@ -206,7 +206,7 @@ const decodeDetails = function (encodedDetails) {
                         socket.emit('tick', window.price);
                     }
                     if (count >= duration) {
-                        socket.emit('endAuction', window.username);
+                        socket.emit('endAuction', window.username, window.minimalPrice);
                         clearInterval(window.intervalId);
                         return;
                     }
