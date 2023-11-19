@@ -133,7 +133,8 @@ const decodeDetails = function (encodedDetails) {
             document.getElementById('sellTo').hidden = false;
             document.getElementById('sellTo').innerHTML = `Vendido a: ${soldTo}`;
             document.getElementById('sellBy').hidden = false;
-            document.getElementById('sellBy').innerHTML = `Por ${soldBy}`;
+            (Math.trunc(((soldBy) * 100)) / 100).toFixed(2);
+            document.getElementById('sellBy').innerHTML = `Por ${soldBy.toFixed(2)}`;
         });
     });
 
@@ -196,7 +197,7 @@ const decodeDetails = function (encodedDetails) {
             document.querySelector('.controls-section').hidden = true;
             socket.emit('startAuction');
             setTimeout(() => {
-                window.reduction = (Math.trunc(((window.price - window.minimalPrice) / window.duration) * 100) / 100).toFixed(2);;
+                window.reduction = (Math.trunc(((window.price - window.minimalPrice) / window.duration) * 100) / 100).toFixed(2);
                 let count = 0;
                 window.intervalId = setInterval(() => {
                     count++;
