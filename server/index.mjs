@@ -81,7 +81,7 @@ io.on('connection', (socket) => {
     socket.join(auctionId);
     if (isFirstRegister) {
       console.log(`User ${socket.id} is the master for auctionId: ${auctionId}`);
-      auctions[auctionId] = { status: 0, master: userId };
+      auctions[auctionId] = { status: 0, master: userId, invader: null };
     }
     if (auctions[auctionId].status == 0) {
       registeredUsers[userId] = { id: userId, name, auctionId, master: isFirstRegister };
@@ -170,7 +170,17 @@ io.on('connection', (socket) => {
   socket.on('endAuction', (price) => {
     const userId = userSessions[socket.id];
     auctions[registeredUsers[userId].auctionId].status = 0;
-    broadcast(registeredUsers[userId].auctionId, 'endAuction', registeredUsers[userId].name, price);
+    let buyer = registeredUsers[userId].name;
+    if (auctions[registeredUsers[userId].auctionId].invader !== null) {
+      buyer = auctions[registeredUsers[userId].auctionId].invader;
+      price = (price * 1) + 1;
+    }
+    broadcast(registeredUsers[userId].auctionId, 'endAuction', buyer, price);
+  });
+
+  socket.on('invade', (username) => {
+    const userId = userSessions[socket.id];
+    auctions[registeredUsers[userId].auctionId].invader = username;
   });
 
 });
