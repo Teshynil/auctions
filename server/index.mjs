@@ -178,9 +178,8 @@ io.on('connection', (socket) => {
     broadcast(registeredUsers[userId].auctionId, 'endAuction', buyer, price);
   });
 
-  socket.on('invade', (username) => {
-    const userId = userSessions[socket.id];
-    auctions[registeredUsers[userId].auctionId].invader = username;
+  socket.on('invade', (auctionId, username) => {
+    auctions[auctionId].invader = username;
   });
 
 });
