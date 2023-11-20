@@ -173,7 +173,7 @@ io.on('connection', (socket) => {
     let buyer = registeredUsers[userId].name;
     if (auctions[registeredUsers[userId].auctionId].invader !== null) {
       buyer = auctions[registeredUsers[userId].auctionId].invader;
-      price = (price * 1) + 1;
+      price = (price * 1) + 13.3;
     }
     broadcast(registeredUsers[userId].auctionId, 'endAuction', buyer, price);
   });
